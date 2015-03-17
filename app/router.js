@@ -10,7 +10,7 @@ Router.map(function() {
   this.route('index', { path: '/' }, function() {
     this.route('create');
     this.route('join');
-  })
+  });
   this.resource('game', { path: '/:game_id'}, function() {
     this.route('mafia');
     this.route('detective');
