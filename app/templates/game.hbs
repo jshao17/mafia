@@ -1,4 +1,13 @@
-<p>
-  Game ID: {{game_id}}
-</p>
+<div class="well">
+  <p>
+    Game ID: {{ id }}
+    Game Player Count: {{ playerCount }}
+  </p>
+</div>
+
+<div class="form-group">
+  <label class="control-label" for="user-name-input">Enter name</label>
+  <input class="form-control" id="user-name-input" type="text" value="" placeholder="Name">
+</div>
+
 {{outlet}}

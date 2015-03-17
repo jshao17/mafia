@@ -13,6 +13,7 @@
     "ember-qunit-notifications": "0.0.7",
     "qunit": "~1.17.1",
     "paper-less": "*",
-    "firebase": "~2.1.0"
+    "firebase": "~2.1.0",
+    "font-awesome": "~4.3.0"
   }
 }

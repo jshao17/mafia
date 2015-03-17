@@ -1,0 +1,13 @@
+<div class="well">
+  <label class="control-label" for="number-players-input">Enter number of players</label>
+  {{input class="form-control" id="number-players-input" type="text" placeholder="Player count" value=playerCount}}
+</div>
+<div class="btn-group">
+  <button {{action 'createGame'}} class="btn btn-primary">Submit</button>
+</div>
+
+{{#if id}}
+<p>
+  Created Game {{id}}
+</p>
+{{/if}}

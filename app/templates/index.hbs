@@ -1,2 +1,8 @@
-<a href="#" class="btn btn-primary">Create Game</a>
-<a href="#" class="btn">Join Game</a>
+{{outlet}}
+
+<div class="btn-toolbar">
+  <div class="btn-group">
+    {{link-to 'Create Game' 'index.create' class="btn btn-primary"}}
+    {{link-to 'Join Game' 'index.join' class="btn"}}
+  </div>
+</div>

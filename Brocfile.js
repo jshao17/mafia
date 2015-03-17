@@ -1,8 +1,11 @@
 /* global require, module */
+var pickFiles = require('broccoli-static-compiler');
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  emberCliFontAwesome: { includeFontAwesomeAssets: false }
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
@@ -18,5 +21,12 @@ var app = new EmberApp();
 // along with the exports of each module as its value.
 
 app.import('bower_components/paper-less/css/paper.css');
+app.import('bower_components/font-awesome/css/font-awesome.css');
 
-module.exports = app.toTree();
+var fontTree = pickFiles('bower_components/font-awesome/fonts', {
+  srcDir: '/',
+  files: ['fontawesome-webfont.eot','fontawesome-webfont.ttf','fontawesome-webfont.svg','fontawesome-webfont.woff','fontawesome-webfont.woff2','FontAwesome.otf'],
+  destDir: '/fonts'
+});
+
+module.exports = app.toTree(fontTree);
