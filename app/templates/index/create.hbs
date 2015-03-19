@@ -1,13 +1,22 @@
-<div class="well">
-  <label class="control-label" for="number-players-input">Enter number of players</label>
-  {{input class="form-control" id="number-players-input" type="text" placeholder="Player count" value=playerCount}}
-</div>
-<div class="btn-group">
-  <button {{action 'createGame'}} class="btn btn-primary">Submit</button>
-</div>
-
-{{#if id}}
-<p>
-  Created Game {{id}}
-</p>
-{{/if}}
+<form class="form-horizontal" {{action 'createGame' on='submit'}}>
+  <fieldset>
+    <legend>Create Game</legend>
+    <div class="form-group">
+      <label class="col-lg-2 control-label" for="admin-player-input">Enter your name</label>
+      <div class="col-lg-10">
+        {{input class="form-control" id="admin-player-input" type="text" placeholder="Player name" value=name}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2 control-label" for="number-players-input">Enter number of players</label>
+      <div class="col-lg-10">
+        {{input class="form-control" id="number-players-input" type="text" placeholder="Player count" value=playerCount}}
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>

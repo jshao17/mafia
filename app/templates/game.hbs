@@ -1,13 +1,27 @@
+<form class="form-horizontal" {{action 'createPlayer' on='submit'}}>
+  <fieldset>
+    <legend>User Information</legend>
+    <div class="form-group">
+      <label class="col-lg-1 control-label" for="user-name-input">Enter name</label>
+      <div class="col-lg-11">
+        {{input class="form-control" id="user-name-input" type="text" placeholder="User name" value=name}}
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-11 col-lg-offset-1">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
 <div class="well">
   <p>
-    Game ID: {{ id }}
-    Game Player Count: {{ playerCount }}
+    Game ID: {{model.id}}
   </p>
-</div>
-
-<div class="form-group">
-  <label class="control-label" for="user-name-input">Enter name</label>
-  <input class="form-control" id="user-name-input" type="text" value="" placeholder="Name">
+  <p>
+    Game Player Count: {{model.playerCount}}
+  </p>
 </div>
 
 {{outlet}}

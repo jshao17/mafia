@@ -15,5 +15,8 @@
     "paper-less": "*",
     "firebase": "~2.1.0",
     "font-awesome": "~4.3.0"
+  },
+  "devDependencies": {
+    "bootstrap": "~3.3.4"
   }
 }

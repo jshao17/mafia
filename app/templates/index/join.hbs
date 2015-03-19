@@ -1,7 +1,10 @@
 <div class="well">
+  <p>
+    Game ID:
+  </p>
   {{#each game in model}}
   <p>
-    {{game.id}} { Players:{{game.playerCount}} }
+    {{#link-to 'game' game}}{{game.id}}{{/link-to}}
   </p>
   {{/each}}
 </div>
