@@ -3,11 +3,13 @@ import Firebase from 'firebase';
 
 export default Ember.Route.extend({
   player: null,
+  playerRef: null,
   deactivate: function() {
     var self = this;
     this.controller.model.store.find('game', this.controller.model.id).then(game => {
       game.get('players').removeObject(self.player);
       game.save();
+      self.playerRef.onDisconnect().cancel();
     });
   },
   setupController: function(controller, game) {
@@ -19,10 +21,10 @@ export default Ember.Route.extend({
     this.player = controller.store.createRecord('player', {
       name: 'Test Player Joined!'
     });
-    var playerRef = new Firebase('https://sweltering-inferno-359.firebaseio.com/games/' + game.id + '/players/' + this.player.id);
+    this.playerRef = new Firebase('https://sweltering-inferno-359.firebaseio.com/games/' + game.id + '/players/' + this.player.id);
     connectedRef.on('value', function(snap) {
       if (snap.val() === true) {
-        playerRef.onDisconnect().remove();
+        self.playerRef.onDisconnect().remove();
 
         self.controller.store.find('game', game.id).then(data =>
         {
