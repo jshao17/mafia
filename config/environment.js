@@ -5,7 +5,7 @@ module.exports = function(environment) {
     modulePrefix: 'mafia',
     environment: environment,
     contentSecurityPolicy: { 'connect-src': "'self' wss://*.firebaseio.com" },
-    firebase: 'https://sweltering-inferno-359.firebaseio.com/',
+    firebase: 'https://doublemafia.firebaseio.com/',
     baseURL: '/',
     locationType: 'auto',
     EmberENV: {

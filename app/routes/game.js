@@ -2,35 +2,39 @@ import Ember from 'ember';
 import Firebase from 'firebase';
 
 export default Ember.Route.extend({
+  // TODO: replace with game player
   player: null,
-  playerRef: null,
   deactivate: function() {
-    var self = this;
-    this.controller.model.store.find('game', this.controller.model.id).then(game => {
-      game.get('players').removeObject(self.player);
-      game.save();
-      self.playerRef.onDisconnect().cancel();
-    });
+    // Delete and commit the deletion of the player in the store
+    this.player.deleteRecord();
+    this.player.save();
   },
   setupController: function(controller, game) {
     var self = this;
     this._super(controller, game);
 
-    var connectedRef = new Firebase('https://sweltering-inferno-359.firebaseio.com/.info/connected');
+    // Special Firebase location that tells us if we are connected
+    var connectedRef = new Firebase('https://doublemafia.firebaseio.com/.info/connected');
+    var gameRef = new Firebase('https://doublemafia.firebaseio.com/games/' + game.id);
 
-    this.player = controller.store.createRecord('player', {
-      name: 'Test Player Joined!'
-    });
-    this.playerRef = new Firebase('https://sweltering-inferno-359.firebaseio.com/games/' + game.id + '/players/' + this.player.id);
     connectedRef.on('value', function(snap) {
+      // Once we are connected ...
       if (snap.val() === true) {
-        self.playerRef.onDisconnect().remove();
-
-        self.controller.store.find('game', game.id).then(data =>
-        {
-          data.get('players').addObject(self.player);
-          data.save();
+        // Create a reference to a player that 'belongsTo' a game
+        // which will take care of the 'hasMany' relationship.
+        // This doesn't actually add the player to the game
+        self.player = controller.store.createRecord('player', {
+          name: 'Test Player Joined!',
+          game: game
         });
+
+        // Register a 'onDisconnect' handler that will remove the player
+        // Do this before committing to prevent race conditions where user disconnects before save
+        var playerRef = gameRef.child('players/' + self.player.id);
+        playerRef.onDisconnect().remove();
+
+        // Save the record
+        game.save();
       }
     });
   },

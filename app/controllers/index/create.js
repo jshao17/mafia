@@ -9,10 +9,7 @@ export default Ember.Controller.extend({
         phase: 0
       });
 
-      newGame.save().then(function(data) {
-        self.setProperties({
-          playerCount: ''
-        });
+      newGame.save().then(data => {
         self.transitionToRoute('game', data);
       });
     }
