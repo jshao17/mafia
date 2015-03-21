@@ -4,7 +4,11 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'mafia',
     environment: environment,
-    contentSecurityPolicy: { 'connect-src': "'self' wss://*.firebaseio.com" },
+    contentSecurityPolicy: {
+      'connect-src': "'self' wss://*.firebaseio.com",
+      'font-src': "'self' data: http://fonts.gstatic.com",
+      'style-src': "'self' fonts.googleapis.com"
+    },
     firebase: 'https://doublemafia.firebaseio.com/',
     baseURL: '/',
     locationType: 'auto',

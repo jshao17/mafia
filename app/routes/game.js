@@ -2,8 +2,6 @@ import Ember from 'ember';
 import Firebase from 'firebase';
 
 export default Ember.Route.extend({
-  // TODO: replace with game player
-  player: null,
   deactivate: function() {
     // Delete and commit the deletion of the player in the store
     this.player.deleteRecord();
@@ -23,19 +21,25 @@ export default Ember.Route.extend({
         // Create a reference to a player that 'belongsTo' a game
         // which will take care of the 'hasMany' relationship.
         // This doesn't actually add the player to the game
-        self.player = controller.store.createRecord('player', {
-          name: 'Test Player Joined!',
-          game: game
+        game.reload().then(data =>{
+          self.player = controller.store.createRecord('player', {
+            name: 'Test Player Joined!',
+            game: data
+          });
+
+          // Register a 'onDisconnect' handler that will remove the player
+          // Do this before committing to prevent race conditions where user disconnects before save
+          var innerPlayerRef = gameRef.child('players/' + self.player.id);
+          var playerRef = new Firebase('https://doublemafia.firebaseio.com/players/' + self.player.id);
+          innerPlayerRef.onDisconnect().remove();
+          playerRef.onDisconnect().remove();
+
+          // Save the record
+          self.player.save().then(function() {
+            data.save();
+          });
         });
-
-        // Register a 'onDisconnect' handler that will remove the player
-        // Do this before committing to prevent race conditions where user disconnects before save
-        var playerRef = gameRef.child('players/' + self.player.id);
-        playerRef.onDisconnect().remove();
-
-        // Save the record
-        game.save();
       }
     });
-  },
+  }
 });
