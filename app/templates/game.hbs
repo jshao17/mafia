@@ -5,10 +5,12 @@
   <div class="panel-body">
   {{#each player in model.players}}
   <p>
-    {{player.name}} {{player.id}}
+    {{player.name}}
   </p>
   {{/each}}
   </div>
 </div>
+
+{{link-to 'Back' 'index.join' class="btn"}}
 
 {{outlet}}
