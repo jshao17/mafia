@@ -17,26 +17,33 @@ export default Ember.Route.extend({
 
     connectedRef.on('value', function(snap) {
       // Once we are connected ...
-      if (snap.val() === true) {
+      if (snap.exists()) {
         // Create a reference to a player that 'belongsTo' a game
         // which will take care of the 'hasMany' relationship.
         // This doesn't actually add the player to the game
-        game.reload().then(data =>{
-          self.player = controller.store.createRecord('player', {
-            name: 'Test Player Joined!',
-            game: data
-          });
 
-          // Register a 'onDisconnect' handler that will remove the player
-          // Do this before committing to prevent race conditions where user disconnects before save
-          var innerPlayerRef = gameRef.child('players/' + self.player.id);
-          var playerRef = new Firebase('https://doublemafia.firebaseio.com/players/' + self.player.id);
-          innerPlayerRef.onDisconnect().remove();
-          playerRef.onDisconnect().remove();
+        self.player = controller.store.createRecord('player', {
+          game: game
+        });
 
-          // Save the record
-          self.player.save().then(function() {
-            data.save();
+        // Register a 'onDisconnect' handler that will remove the player
+        // Do this before committing to prevent race conditions where user disconnects before save
+        var innerPlayerRef = gameRef.child('players/' + self.player.id);
+        var playerRef = new Firebase('https://doublemafia.firebaseio.com/players/' + self.player.id);
+        innerPlayerRef.onDisconnect().remove();
+        playerRef.onDisconnect().remove();
+
+        // Save the record
+        self.player.save().then(function() {
+          game.save();
+          gameRef.on('value', function(snap) {
+            var g = snap.val();
+            if (g.players) {
+              if (Object.keys(g.players)[0] === self.player.id) {
+                game.set('adminControls', true);
+                controller.set('model', game);
+              }
+            }
           });
         });
       }

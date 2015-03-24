@@ -12,10 +12,6 @@ Router.map(function() {
     this.route('join');
   });
   this.resource('game', { path: '/:game_id'}, function() {
-    this.resource('mafia');
-    this.resource('detective');
-    this.resource('witch');
-    this.route('waiting');
   });
 });
 

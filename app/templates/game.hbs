@@ -1,16 +1,23 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">Players</h3>
+    <h3 class="panel-title">Players: {{model.players.length}}</h3>
   </div>
   <div class="panel-body">
   {{#each player in model.players}}
   <p>
-    {{player.name}}
+    {{player.id}}
   </p>
   {{/each}}
   </div>
 </div>
-
-{{link-to 'Back' 'index.join' class="btn"}}
-
+{{#if model.adminControls}}
+<h1>I'm the admin!</h1>
+{{else}}
+<h2>I'm just a normal player :(</h2>
+{{/if}}
 {{outlet}}
+<div class="btn-toolbar">
+  <div class="btn-group">
+    {{link-to 'Back' 'index.join' class="btn"}}
+  </div>
+</div>

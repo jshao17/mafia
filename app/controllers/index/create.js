@@ -6,7 +6,6 @@ export default Ember.Controller.extend({
       var self = this;
 
       var newGame = this.store.createRecord('game', {
-        phase: 0
       });
 
       newGame.save().then(data => {
