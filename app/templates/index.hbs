@@ -1,15 +1,23 @@
-{{playing-card rank='queen' suit='heart'}}
-{{playing-card rank='king' suit='spade'}}
+<div class="row">
+  <div class="col-lg-12">
+    {{playing-card rank='queen' suit='heart'}}
+    {{playing-card rank='king' suit='spade'}}
+  </div>
+</div>
 
-<div class="well">
-  <p>
-    Game ID:
-  </p>
-  {{#each game in model}}
-  <p>
-    {{#link-to 'game' game}}{{game.id}}{{/link-to}}
-  </p>
-  {{/each}}
+<div class="row">
+  <div class="col-lg-12">
+    <h5>Games</h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <ul class="list-group">
+      {{#each game in model}}
+      {{#link-to 'game' game class='list-group-item'}}<span class="badge">{{game.players.length}}</span>{{game.id}}{{/link-to}}
+      {{/each}}
+    </ul>
+  </div>
 </div>
 
 <div class="btn-toolbar">

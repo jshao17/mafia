@@ -6,5 +6,8 @@ export default DS.Model.extend({
   frCop: DS.attr('number', { defaultValue: 0 }),
   srCop: DS.attr('number', { defaultValue: 0 }),
   frWitch: DS.attr('number', { defaultValue: 0 }),
-  players: DS.hasMany('player', { async: true })
+  players: DS.hasMany('player', { async: true }),
+  eligiblePlayers: function() {
+    return Math.max(this.get('players.length') - 1, 0);
+  }.property('players')
 });
