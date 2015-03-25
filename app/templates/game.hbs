@@ -8,7 +8,7 @@
   </div>
 </div>
 <br>
-{{#if model.showControl}}
+{{#if model.player.showControl}}
 <div class="row">
   <div class="col-lg-12">
     <div class="well">
@@ -45,11 +45,21 @@
               {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
             </div>
           </div>
+          <div class="form-group">
+            <div class="col-lg-9 col-lg-offset-3">
+              <a {{action 'assignRoles'}} class="btn btn-primary">Assign Roles</a>
+            </div>
+          </div>
         </fieldset>
       </form>
     </div>
   </div>
 </div>
+{{else}}
+{{#if model.player.hasRoles}}
+<h3>Your cards</h3>
+{{playing-card rank=model.player.firstCard}}
+{{playing-card rank=model.player.secondCard}}
 {{else}}
 <div class="row">
   <div class="col-lg-12">
@@ -59,6 +69,7 @@
     </div>
   </div>
 </div>
+{{/if}}
 {{/if}}
 {{outlet}}
 <div class="btn-toolbar">

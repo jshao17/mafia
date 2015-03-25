@@ -8,7 +8,6 @@ export default Ember.Route.extend({
     this.player.save();
   },
   setControl: function(controller, model) {
-    model.set('showControl', true);
     controller.set('model', model);
   },
   setupController: function(controller, model) {
@@ -25,7 +24,6 @@ export default Ember.Route.extend({
         // Create a reference to a player that 'belongsTo' a game
         // which will take care of the 'hasMany' relationship.
         // This doesn't actually add the player to the game
-
         self.player = controller.store.createRecord('player', {
           game: model
         });
@@ -39,15 +37,19 @@ export default Ember.Route.extend({
 
         // Save the record
         self.player.save().then(function() {
-          model.save();
-          if (model.get('players.length') === 1) {
-            self.setControl(controller, model);
+          return model.save();
+        }).then(m => {
+          if (m.get('players.length') === 1) {
+            self.player.set('showControl', true);
           }
+          controller.set('model.player', self.player);
+
           gameRef.on('child_removed', function() {
-            model.reload().then(game => {
+            m.reload().then(game => {
               var player = game.get('players').objectAt(0);
               if (player && player.id === self.player.id) {
-                self.setControl(controller, game);
+                self.player.set('showControl', true);
+                controller.set('model.player', self.player);
               }
               if(game.get('eligiblePlayers') < game.get('firstRoundRoles') ||
                  game.get('eligiblePlayers') < game.get('secondRoundRoles')) {

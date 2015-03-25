@@ -23,5 +23,7 @@ export default Ember.Controller.extend({
     return this.range(this.get('model.players.length') - this.get('model.frMafia') - this.get('model.frCop'));
   }.property('model.frMafia', 'model.frCop', 'model.frWitch', 'model.players'),
   actions: {
+    assignRoles: function() {
+    }
   }
 });
