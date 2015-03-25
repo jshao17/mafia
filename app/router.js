@@ -7,10 +7,6 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('about');
-  this.route('index', { path: '/' }, function() {
-    this.route('create');
-    this.route('join');
-  });
   this.resource('game', { path: '/:game_id'}, function() {
   });
 });
