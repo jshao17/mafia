@@ -43,13 +43,17 @@ export default Ember.Route.extend({
           if (model.get('players.length') === 1) {
             self.setControl(controller, model);
           }
-          gameRef.on('child_removed', function(snap) {
+          gameRef.on('child_removed', function() {
             model.reload().then(game => {
               var player = game.get('players').objectAt(0);
               if (player && player.id === self.player.id) {
                 self.setControl(controller, game);
               }
-            })
+              if(game.get('eligiblePlayers') < game.get('firstRoundRoles') ||
+                 game.get('eligiblePlayers') < game.get('secondRoundRoles')) {
+                game.rollback();
+              }
+            });
           });
         });
       }
