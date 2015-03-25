@@ -7,13 +7,17 @@ export default Ember.Route.extend({
     this.player.deleteRecord();
     this.player.save();
   },
-  setupController: function(controller, game) {
+  setControl: function(controller, model) {
+    model.set('showControl', true);
+    controller.set('model', model);
+  },
+  setupController: function(controller, model) {
     var self = this;
-    this._super(controller, game);
+    this._super(controller, model);
 
     // Special Firebase location that tells us if we are connected
     var connectedRef = new Firebase('https://doublemafia.firebaseio.com/.info/connected');
-    var gameRef = new Firebase('https://doublemafia.firebaseio.com/games/' + game.id);
+    var gameRef = new Firebase('https://doublemafia.firebaseio.com/games/' + model.id + '/players');
 
     connectedRef.on('value', function(snap) {
       // Once we are connected ...
@@ -23,27 +27,29 @@ export default Ember.Route.extend({
         // This doesn't actually add the player to the game
 
         self.player = controller.store.createRecord('player', {
-          game: game
+          game: model
         });
 
         // Register a 'onDisconnect' handler that will remove the player
         // Do this before committing to prevent race conditions where user disconnects before save
-        var innerPlayerRef = gameRef.child('players/' + self.player.id);
+        var innerPlayerRef = gameRef.child(self.player.id);
         var playerRef = new Firebase('https://doublemafia.firebaseio.com/players/' + self.player.id);
         innerPlayerRef.onDisconnect().remove();
         playerRef.onDisconnect().remove();
 
         // Save the record
         self.player.save().then(function() {
-          game.save();
-          gameRef.on('value', function(snap) {
-            var g = snap.val();
-            if (g.players) {
-              if (Object.keys(g.players)[0] === self.player.id) {
-                game.set('adminControls', true);
-                controller.set('model', game);
+          model.save();
+          if (model.get('players.length') === 1) {
+            self.setControl(controller, model);
+          }
+          gameRef.on('child_removed', function(snap) {
+            model.reload().then(game => {
+              var player = game.get('players').objectAt(0);
+              if (player && player.id === self.player.id) {
+                self.setControl(controller, game);
               }
-            }
+            })
           });
         });
       }

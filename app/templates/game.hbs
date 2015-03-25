@@ -1,23 +1,69 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Players: {{model.players.length}}</h3>
-  </div>
-  <div class="panel-body">
-  {{#each player in model.players}}
-  <p>
-    {{player.id}}
-  </p>
-  {{/each}}
+<div class="row">
+  <div class="col-lg-12">
+    <ul class="nav nav-pills">
+      <li class="active">
+        <a>Players <span class="badge">{{ numPlayers }}</span></a>
+      </li>
+    </ul>
   </div>
 </div>
-{{#if model.adminControls}}
-<h1>I'm the admin!</h1>
+<br>
+{{#if model.showControl}}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="well">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Game Settings</legend>
+          <div class="form-group">
+            <label for="first-round-mafia" class="col-lg-3 control-label">First Round <span class="text-danger">Mafias</span></label>
+            <div class="col-lg-9">
+              {{view 'select' id='first-round-mafia' class='form-control' value=model.frMafia content=possibleFrMafia}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="second-round-mafia" class="col-lg-3 control-label">Second Round <span class="text-danger">Mafias</span></label>
+            <div class="col-lg-9">
+              {{view 'select' id='second-round-mafia' class='form-control' value=model.srMafia content=possibleSrMafia}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="first-round-cop" class="col-lg-3 control-label">First Round <span class="text-primary">Detectives</span></label>
+            <div class="col-lg-9">
+              {{view 'select' id='first-round-cop' class='form-control' value=model.frCop content=possibleFrCop}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="second-round-cop" class="col-lg-3 control-label">Second Round <span class="text-primary">Detectives</span></label>
+            <div class="col-lg-9">
+              {{view 'select' id='second-round-cop' class='form-control' value=model.srCop content=possibleSrCop}}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="first-round-witch" class="col-lg-3 control-label"><span class="text-info">Witch</span></label>
+            <div class="col-lg-9">
+              {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
 {{else}}
-<h2>I'm just a normal player :(</h2>
+<div class="row">
+  <div class="col-lg-12">
+    <h4>Waiting for players ...</h4>
+    <div class="progress progress-striped active">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
 {{/if}}
 {{outlet}}
 <div class="btn-toolbar">
   <div class="btn-group">
-    {{link-to 'Back' 'index.join' class="btn"}}
+    {{link-to 'Back' 'index.join' class="btn btn-default"}}
   </div>
 </div>
+<br>
