@@ -8,75 +8,70 @@
   </div>
 </div>
 <br>
-{{#if model.player.showControl}}
 <div class="row">
   <div class="col-lg-12">
-    <div class="well">
-      <form class="form-horizontal">
-        <fieldset>
-          <legend>Game Settings</legend>
-          <div class="form-group">
-            <label for="first-round-mafia" class="col-lg-3 control-label">First Round <span class="text-danger">Mafias</span></label>
-            <div class="col-lg-9">
-              {{view 'select' id='first-round-mafia' class='form-control' value=model.frMafia content=possibleFrMafia}}
+  {{#if model.player.showControl}}
+      <div class="well">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>Game Settings</legend>
+            <div class="form-group">
+              <label for="first-round-mafia" class="col-lg-3 control-label">First Round <span class="text-danger">Mafias</span></label>
+              <div class="col-lg-9">
+                {{view 'select' id='first-round-mafia' class='form-control' value=model.frMafia content=possibleFrMafia}}
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="second-round-mafia" class="col-lg-3 control-label">Second Round <span class="text-danger">Mafias</span></label>
-            <div class="col-lg-9">
-              {{view 'select' id='second-round-mafia' class='form-control' value=model.srMafia content=possibleSrMafia}}
+            <div class="form-group">
+              <label for="second-round-mafia" class="col-lg-3 control-label">Second Round <span class="text-danger">Mafias</span></label>
+              <div class="col-lg-9">
+                {{view 'select' id='second-round-mafia' class='form-control' value=model.srMafia content=possibleSrMafia}}
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="first-round-cop" class="col-lg-3 control-label">First Round <span class="text-primary">Detectives</span></label>
-            <div class="col-lg-9">
-              {{view 'select' id='first-round-cop' class='form-control' value=model.frCop content=possibleFrCop}}
+            <div class="form-group">
+              <label for="first-round-cop" class="col-lg-3 control-label">First Round <span class="text-primary">Detectives</span></label>
+              <div class="col-lg-9">
+                {{view 'select' id='first-round-cop' class='form-control' value=model.frCop content=possibleFrCop}}
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="second-round-cop" class="col-lg-3 control-label">Second Round <span class="text-primary">Detectives</span></label>
-            <div class="col-lg-9">
-              {{view 'select' id='second-round-cop' class='form-control' value=model.srCop content=possibleSrCop}}
+            <div class="form-group">
+              <label for="second-round-cop" class="col-lg-3 control-label">Second Round <span class="text-primary">Detectives</span></label>
+              <div class="col-lg-9">
+                {{view 'select' id='second-round-cop' class='form-control' value=model.srCop content=possibleSrCop}}
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="first-round-witch" class="col-lg-3 control-label"><span class="text-info">Witch</span></label>
-            <div class="col-lg-9">
-              {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
+            <div class="form-group">
+              <label for="first-round-witch" class="col-lg-3 control-label"><span class="text-info">Witch</span></label>
+              <div class="col-lg-9">
+                {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="col-lg-9 col-lg-offset-3">
-              <a {{action 'assignRoles'}} class="btn btn-primary">Assign Roles</a>
+            <div class="form-group">
+              <div class="col-lg-9 col-lg-offset-3">
+                <a {{action 'assignRoles'}} class="btn btn-primary">Assign Roles</a>
+              </div>
             </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
+          </fieldset>
+        </form>
+      </div>
+  {{else}}
+      {{#if model.player.hasRoles}}
+        <h3>Your cards</h3>
+        <div class="cards">
+          {{playing-card rank=model.player.firstCard}}
+          {{playing-card rank=model.player.secondCard}}
+        </div>
+      {{else}}
+        <h4>Waiting for players ...</h4>
+        <div class="progress progress-striped active">
+          <div class="progress-bar"></div>
+        </div>
+      {{/if}}
+  {{/if}}
   </div>
 </div>
-{{else}}
-<div class="row">
-  <div class="col-lg-12">
-    {{#if model.player.hasRoles}}
-    <h3>Your cards</h3>
-    <div class="cards">
-      {{playing-card rank=model.player.firstCard}}
-      {{playing-card rank=model.player.secondCard}}
-    </div>
-    {{else}}
-    <h4>Waiting for players ...</h4>
-    <div class="progress progress-striped active">
-      <div class="progress-bar"></div>
-    </div>
-    {{/if}}
-  </div>
-</div>
-{{/if}}
 {{outlet}}
 <div class="btn-toolbar">
   <div class="btn-group">
     {{link-to 'Back' 'index' class="btn btn-default"}}
   </div>
 </div>
-<br>
