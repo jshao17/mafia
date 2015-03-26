@@ -16,31 +16,31 @@
           <fieldset>
             <legend>Game Settings</legend>
             <div class="form-group">
-              <label for="first-round-mafia" class="col-lg-3 control-label">First Round <span class="text-danger">Mafias</span></label>
+              <label for="first-round-mafia" class="col-lg-3 control-label">First Round <span class="text-danger"><strong>Mafia</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='first-round-mafia' class='form-control' value=model.frMafia content=possibleFrMafia}}
               </div>
             </div>
             <div class="form-group">
-              <label for="second-round-mafia" class="col-lg-3 control-label">Second Round <span class="text-danger">Mafias</span></label>
+              <label for="second-round-mafia" class="col-lg-3 control-label">Second Round <span class="text-danger"><strong>Mafia</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='second-round-mafia' class='form-control' value=model.srMafia content=possibleSrMafia}}
               </div>
             </div>
             <div class="form-group">
-              <label for="first-round-cop" class="col-lg-3 control-label">First Round <span class="text-primary">Detectives</span></label>
+              <label for="first-round-cop" class="col-lg-3 control-label">First Round <span class="text-success"><strong>Detective</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='first-round-cop' class='form-control' value=model.frCop content=possibleFrCop}}
               </div>
             </div>
             <div class="form-group">
-              <label for="second-round-cop" class="col-lg-3 control-label">Second Round <span class="text-primary">Detectives</span></label>
+              <label for="second-round-cop" class="col-lg-3 control-label">Second Round <span class="text-success"><strong>Detective</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='second-round-cop' class='form-control' value=model.srCop content=possibleSrCop}}
               </div>
             </div>
             <div class="form-group">
-              <label for="first-round-witch" class="col-lg-3 control-label"><span class="text-info">Witch</span></label>
+              <label for="first-round-witch" class="col-lg-3 control-label">First Round <span class="text-info"><strong>Witch</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
               </div>

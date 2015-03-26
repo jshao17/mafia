@@ -21,7 +21,7 @@ var app = new EmberApp({
 // along with the exports of each module as its value.
 
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
-app.import('vendor/paper.css');
+app.import('vendor/lumen.css');
 app.import('bower_components/font-awesome/css/font-awesome.css');
 
 var fontTree = pickFiles('bower_components/font-awesome/fonts', {
