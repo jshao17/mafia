@@ -15,5 +15,17 @@ export default DS.Model.extend({
   }.property('frMafia', 'frCop', 'frWitch'),
   secondRoundRoles: function() {
     return this.get('srMafia') + this.get('srCop');
-  }.property('srMafia', 'srCop')
+  }.property('srMafia', 'srCop'),
+  assigned: DS.attr('boolean'),
+  rolesAssigned: function() {
+    if (this.get('eligiblePlayers') === 0) {
+      return false;
+    }
+    for(var i = 1; i < this.get('players.length'); ++i) {
+      if (!this.get('players').objectAt(i).get('hasRoles')) {
+        return false;
+      }
+    }
+    return true;
+  }.property('players', 'assigned')
 });

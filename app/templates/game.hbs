@@ -53,6 +53,38 @@
           </fieldset>
         </form>
       </div>
+      {{#if model.rolesAssigned}}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>
+              First Role
+            </th>
+            <th>
+              Second Role
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each model.players as |player index|}}
+          {{#if player.hasRoles}}
+          <tr>
+            <td>
+              {{index}}
+            </td>
+            <td>
+              {{player.firstRole}}
+            </td>
+            <td>
+              {{player.secondRole}}
+            </td>
+          </tr>
+          {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
   {{else}}
       {{#if model.player.hasRoles}}
         <h3>Your cards</h3>

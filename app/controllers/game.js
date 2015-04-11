@@ -46,7 +46,10 @@ export default Ember.Controller.extend({
       this.assignRole('detective', 'secondRole', this.get('model.srCop'), players);
       this.assignRole('witch', 'firstRole', this.get('model.frWitch'), players);
 
-      players.forEach(player => {
+      players.forEach(function(player, index) {
+        if (index === 0) {
+          return;
+        }
         if (!player.get('firstRole')) {
           player.set('firstRole', 'civilian');
         }
@@ -55,6 +58,8 @@ export default Ember.Controller.extend({
         }
         player.save();
       });
+
+      this.toggleProperty('model.assigned');
     }
   }
 });
