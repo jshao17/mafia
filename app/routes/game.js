@@ -4,11 +4,7 @@ import Firebase from 'firebase';
 export default Ember.Route.extend({
   deactivate: function() {
     // Delete and commit the deletion of the player in the store
-    this.player.deleteRecord();
-    this.player.save();
-  },
-  setControl: function(controller, model) {
-    controller.set('model', model);
+    this.player.destroyRecord();
   },
   setupController: function(controller, model) {
     var self = this;
@@ -16,7 +12,7 @@ export default Ember.Route.extend({
 
     // Special Firebase location that tells us if we are connected
     var connectedRef = new Firebase('https://doublemafia.firebaseio.com/.info/connected');
-    var gameRef = new Firebase('https://doublemafia.firebaseio.com/games/' + model.id + '/players');
+    var gameRef = this.store.adapterFor('game')._getRef('game').child(model.id).child('players');
 
     connectedRef.on('value', function(snap) {
       // Once we are connected ...
@@ -31,7 +27,7 @@ export default Ember.Route.extend({
         // Register a 'onDisconnect' handler that will remove the player
         // Do this before committing to prevent race conditions where user disconnects before save
         var innerPlayerRef = gameRef.child(self.player.id);
-        var playerRef = new Firebase('https://doublemafia.firebaseio.com/players/' + self.player.id);
+        var playerRef = self.store.adapterFor('player')._getRef('player').child(self.player.id);
         innerPlayerRef.onDisconnect().remove();
         playerRef.onDisconnect().remove();
 
@@ -45,7 +41,7 @@ export default Ember.Route.extend({
           controller.set('model.player', self.player);
 
           gameRef.on('child_removed', function() {
-            m.reload().then(game => {
+            model.reload().then(game => {
               var player = game.get('players').objectAt(0);
               if (player && player.id === self.player.id) {
                 self.player.set('showControl', true);
