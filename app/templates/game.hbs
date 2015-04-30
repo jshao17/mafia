@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="first-round-witch" class="col-lg-3 control-label">First Round <span class="text-info"><strong>Witch</strong></span></label>
+              <label for="first-round-witch" class="col-lg-3 control-label">First Round <span class="text-primary"><strong>Witch</strong></span></label>
               <div class="col-lg-9">
                 {{view 'select' id='first-round-witch' class='form-control' value=model.frWitch content=possibleFrWitch}}
               </div>
@@ -87,7 +87,10 @@
       {{/if}}
   {{else}}
       {{#if model.player.hasRoles}}
-        <h3>Your cards</h3>
+        <div class="alert alert-dismissible alert-info">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          Remember! <span class="text-danger">King is Mafia</span>, <span class="text-success">Jack is Detective</span>, and <span class="text-primary">Queen is Witch</span>.
+        </div>
         <div class="cards">
           {{playing-card rank=model.player.firstCard}}
           {{playing-card rank=model.player.secondCard}}
